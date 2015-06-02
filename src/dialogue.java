@@ -59,5 +59,8 @@ public class dialogue {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+
+        RefactoringPatterns r = new RefactoringPatterns("temp");
+        //r.loadProfile();
     }
 }
