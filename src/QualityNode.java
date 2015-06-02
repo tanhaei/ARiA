@@ -4,4 +4,8 @@
 public class QualityNode {
     public String name;
     public String ID;
+
+    public QualityNode(String id) {
+        this.ID = id;
+    }
 }

@@ -4,7 +4,10 @@
 
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.WrappedException;
@@ -26,8 +29,7 @@ import javax.management.Attribute;
 
 public class RefactoringPatterns {
     public String name;
-    public String generatedrule;
-    public Float rank;
+
 
     private Model model;
     private Profile profile;
@@ -37,13 +39,19 @@ public class RefactoringPatterns {
 
     private static final ResourceSetImpl RESOURCE_SET = new ResourceSetImpl();
 
+
+    private static List<Pattern> Patterns = new ArrayList<Pattern>();
+    private static List<Goal> Goals = new ArrayList<Goal>();
+    private static List<Metric> Metrics = new ArrayList<Metric>();
+    private static List<QualityNode> QualityNodes = new ArrayList<QualityNode>();
+
+
     public RefactoringPatterns(String url) {
         ModelURL = url;
-        loadProfile("");
+        loadModels("");
 
     }
 
-    public String preconditionrule;
 
     public String getName() {
         return name;
@@ -65,8 +73,7 @@ public class RefactoringPatterns {
         return profile_;
     }
 
-    protected void loadProfile(String PROFILE_NAME)
-    {
+    protected void loadProfile(String PROFILE_NAME) {
         String PROFILE_ADD = "./profiles/refactoring.profile.uml";
         PROFILE_NAME = "refactoring";
         URI profileUri = URI.createFileURI(PROFILE_ADD);
@@ -75,14 +82,12 @@ public class RefactoringPatterns {
         profileSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
         profileSet.createResource(profileUri);
         Resource profileResource = profileSet.getResource(profileUri, true);
-        profile = (Profile)EcoreUtil.getObjectByType(profileResource.getContents(), UMLPackage.Literals.PROFILE);
-        ArchRefactoring = (Stereotype)profile.getOwnedMember("ArchRefactoring");
+        profile = (Profile) EcoreUtil.getObjectByType(profileResource.getContents(), UMLPackage.Literals.PROFILE);
+        ArchRefactoring = (Stereotype) profile.getOwnedMember("ArchRefactoring");
         EList<Property> temp = ArchRefactoring.getOwnedAttributes();
-        loadModels("");
-  }
+    }
 
-    protected void loadModels(String MODEL_NAME)
-    {
+    protected void loadModels(String MODEL_NAME) {
         String STEREOTYPE_TRANSITION_EDGE = "refactoring::ArchRefactoring";
         String MODEL_ADD = "./profiles/refactoring.profile.uml";
 
@@ -91,7 +96,6 @@ public class RefactoringPatterns {
         modelSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
         modelSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(UMLResource.FILE_EXTENSION, UMLResource.Factory.INSTANCE);
         modelSet.createResource(modelUri);
-
 
 
         Resource modelResource = modelSet.getResource(modelUri, true);
@@ -104,54 +108,190 @@ public class RefactoringPatterns {
         EList<EObject> elements = modelResource.getContents();//model2.getOwnedElements();
 
 
-        for(EObject e : elements){
+        for (EObject e : elements) {
             String ClassName = e.eClass().getName();
-            if(ClassName.equals( "ArchRefactoring") || ClassName.equals( "Goal"))
-            {
-                String id = ((XMLResource)e.eResource()).getID(e);
+
+            // ArchRefactoring
+            if (ClassName.equals("ArchRefactoring")) {
+                String id = ((XMLResource) e.eResource()).getID(e);
                 Pattern newPatt = new Pattern(id);
 
-                for(FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl)e).getAnyAttribute())
-                {
+                for (FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e).getAnyAttribute()) {
                     String name = e2.getEStructuralFeature().getName();
                     String value = e2.getValue().toString();
 
-
-
-                    if(name.equals("name"))
-                    {
+                    if (name.equals("name")) {
                         newPatt.name = value;
-                    }
-                    else if(name.equals("rule"))
-                    {
+                    } else if (name.equals("rule")) {
                         newPatt.rules = value;
-                    }
-                    else if(name.equals("helpers"))
-                    {
+                    } else if (name.equals("helpers")) {
                         newPatt.helpers = value;
-                    }
-                    else if(name.equals("lazyRules"))
-                    {
+                    } else if (name.equals("lazyRules")) {
                         newPatt.lazyRules = value;
+                    } else if (name.equals("goals")) {
+                        String[] goals = value.split(" ");
+                        for (String goalSTR : goals) {
+                            Goal g = searchInGoals(goalSTR);
+                            if (g == null) {
+                                g = new Goal(goalSTR);
+                                Goals.add(g);
+                            }
+                            newPatt.goals.add(g.ID);
+                        }
                     }
-
-
-
                 }
-                for(FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl)e).getMixed())
-                {
+                for (FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e).getMixed()) {
                     String name = e2.getEStructuralFeature().getName();
-                    if(name.equals("requiredPatterns")) {
-                        String value = ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl)e2.getValue()).getMixed().getValue(0).toString();
-                        System.out.println(name + "=" + value);
+                    if (name.equals("requiredPatterns")) {
+
+                        String value = ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e2.getValue()).getMixed().getValue(0).toString();
+
+                        newPatt.requiredPatterns.add(value);
+
                     }
 
                 }
 
+                Patterns.add(newPatt);
+            }
+            // Goal
+            else if (ClassName.equals("Goal")) {
+                String id = ((XMLResource) e.eResource()).getID(e);
+                Goal newgoal = searchInGoals(id);
+                if (newgoal == null) {
+                    newgoal = new Goal(id);
+                }
 
+                for (FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e).getAnyAttribute()) {
+                    String name = e2.getEStructuralFeature().getName();
+                    String value = e2.getValue().toString();
+
+                    if (name.equals("node")) {
+                        QualityNode q = searchInQualityNodes(value);
+                        if (q == null) {
+                            q = new QualityNode(value);
+                        }
+                        newgoal.node = q.ID;
+                    } else if (name.equals("subGoals")) {
+                        String[] subgoals = value.split(" ");
+                        for (String subgoalSTR : subgoals) {
+                            Goal g = searchInGoals(subgoalSTR);
+                            if (g == null) {
+                                g = new Goal(subgoalSTR);
+                                Goals.add(g);
+                            }
+                            g.parent = newgoal.ID;
+                            newgoal.subGoals.add(g.ID);
+                        }
+                    } else if (name.equals("metrics")) {
+                        String[] metrics = value.split(" ");
+                        for (String metricSTR : metrics) {
+                            Metric m = searchInMetrics(metricSTR);
+                            if (m == null) {
+                                m = new Metric(metricSTR);
+                                Metrics.add(m);
+                            }
+                            newgoal.metrics.add(m.ID);
+                        }
+                    }
+                }
+
+                if (searchInGoals(newgoal.ID) == null)
+                    Goals.add(newgoal);
+            }
+            // QualityNode
+            else if (ClassName.equals("QualityNode")) {
+                String id = ((XMLResource) e.eResource()).getID(e);
+                QualityNode newnode = searchInQualityNodes(id);
+                if (newnode == null) {
+                    newnode = new QualityNode(id);
+                }
+
+                for (FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e).getAnyAttribute()) {
+                    String name = e2.getEStructuralFeature().getName();
+                    String value = e2.getValue().toString();
+
+                    if (name.equals("name")) {
+                        newnode.name = value;
+                    }
+                }
+
+                if (searchInQualityNodes(newnode.ID) == null)
+                    QualityNodes.add(newnode);
+            }
+            // QualityMetric
+            else if (ClassName.equals("QualityMetric")) {
+                String id = ((XMLResource) e.eResource()).getID(e);
+                Metric newmetric = searchInMetrics(id);
+                if (newmetric == null) {
+                    newmetric = new Metric(id);
+                }
+
+                for (FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e).getAnyAttribute()) {
+                    String name = e2.getEStructuralFeature().getName();
+                    String value = e2.getValue().toString();
+
+                    if (name.equals("name")) {
+                        newmetric.name = value;
+                    } else if (name.equals("sourceValue")) {
+                        newmetric.sourceValue = Float.valueOf(value);
+                    } else if (name.equals("targetValue")) {
+                        newmetric.targetValue = Float.valueOf(value);
+                    }
+                }
+
+                if (searchInMetrics(newmetric.ID) == null)
+                    Metrics.add(newmetric);
             }
 
-
         }
+    }
+
+    public static Goal searchInGoals(String id) {
+        if (Goals == null) return null;
+        Iterator<Goal> it = Goals.iterator();
+        while (it.hasNext()) {
+            Goal goal = it.next();
+            if (goal.ID.equals(id)) {
+                return goal;
+            }
+        }
+        return null;
+    }
+
+    public static Pattern searchInPatterns(String name) {
+        if (Patterns == null) return null;
+        Iterator<Pattern> it = Patterns.iterator();
+        while (it.hasNext()) {
+            Pattern patt = it.next();
+            if (patt.name.equals(name)) {
+                return patt;
+            }
+        }
+        return null;
+    }
+
+    public static QualityNode searchInQualityNodes(String id) {
+        if (QualityNodes == null) return null;
+        Iterator<QualityNode> it = QualityNodes.iterator();
+        while (it.hasNext()) {
+            QualityNode node = it.next();
+            if (node.ID.equals(id)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
+    public static Metric searchInMetrics(String id) {
+        if (Metrics == null) return null;
+        Iterator<Metric> it = Metrics.iterator();
+        while (it.hasNext()) {
+            Metric metric = it.next();
+            if (metric.ID.equals(id)) {
+                return metric;
+            }
+        }
+        return null;
     }
 }

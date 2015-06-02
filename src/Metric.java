@@ -7,4 +7,8 @@ public class Metric {
     public MetricType type;
     public Float sourceValue;
     public Float targetValue;
+
+    public Metric(String id) {
+        this.ID = id;
+    }
 }

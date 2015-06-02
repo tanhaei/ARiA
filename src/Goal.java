@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -5,7 +6,13 @@ import java.util.List;
  */
 public class Goal {
     public String ID;
-    public QualityNode node;
-    public List<Goal> subGoals;
-    public List<Metric> metrics;
+    public String node;
+    public String parent;
+    public List<String> subGoals = new ArrayList<String>();
+    public List<String> metrics = new ArrayList<String>();
+
+
+    public Goal(String id) {
+        this.ID = id;
+    }
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,7 +10,8 @@ public class Pattern {
     public String rules;
     public String lazyRules;
     public String helpers;
-    public List<Goal> goals;
+    public List<String> goals = new ArrayList<String>();
+    public List<String> requiredPatterns = new ArrayList<String>();
 
     public Pattern(String id) {
         ID = id;
