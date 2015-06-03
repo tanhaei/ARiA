@@ -1,6 +1,8 @@
 # ARiA
 ARiA (A Framework to Perform Refactoring on the Software Architecture)
 
+![Alt text](https://dl.dropboxusercontent.com/s/xj2jsqh5oj3cmhz/aria-sample.png "ScreenShot of Current Version of ARiA")
+
 Performing refactoring on the SA is a good way to in- crease software quality before implementation. Identifica- tion of software pitfalls before implementation decreases the cost of development drastically. Avoiding the known bad smells in designing architecture and applying appro- priate SA styles and patterns decreases the likelihood of project failure and increases the satisfaction of the stake- holders. Based on the above mentioned benefits, perform- ing refactoring before going into implementation phase is quite advisable.
 
 Performing refactoring after implementation may help in finding design bugs and can suggest styles and patterns useful for increasing the quality of the software. Applying a refactoring pattern on an implemented system is a hard task to do. This kind of process has to deal with the traceability of the architecture elements to the source code and can lead to large modifications to the source code, huge changes in documentation and so on.
