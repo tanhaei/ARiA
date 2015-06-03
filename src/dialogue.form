@@ -24,7 +24,7 @@
           <text value="Source MetaModel"/>
         </properties>
       </component>
-      <component id="fb9e8" class="javax.swing.JTextField" default-binding="true">
+      <component id="fb9e8" class="javax.swing.JTextField" binding="textField2">
         <constraints>
           <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="324" height="24"/>
@@ -32,7 +32,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="a72a5" class="javax.swing.JTextField" default-binding="true">
+      <component id="a72a5" class="javax.swing.JTextField" binding="textField3">
         <constraints>
           <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="324" height="24"/>
@@ -40,7 +40,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="2e708" class="javax.swing.JTextField" default-binding="true">
+      <component id="2e708" class="javax.swing.JTextField" binding="textField4">
         <constraints>
           <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="324" height="24"/>
@@ -48,7 +48,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="a643e" class="javax.swing.JTextField" default-binding="true">
+      <component id="a643e" class="javax.swing.JTextField" binding="textField5">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="324" height="24"/>
@@ -56,7 +56,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="e541a" class="javax.swing.JTextField" default-binding="true">
+      <component id="e541a" class="javax.swing.JTextField" binding="textField6">
         <constraints>
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="324" height="24"/>
@@ -64,7 +64,7 @@
         </constraints>
         <properties/>
       </component>
-      <component id="77268" class="javax.swing.JTextField" default-binding="true">
+      <component id="77268" class="javax.swing.JTextField" binding="textField7">
         <constraints>
           <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
             <preferred-size width="324" height="24"/>
@@ -74,7 +74,7 @@
           <text value=""/>
         </properties>
       </component>
-      <component id="1994a" class="javax.swing.JButton" default-binding="true">
+      <component id="1994a" class="javax.swing.JButton" binding="TargetMetamodel">
         <constraints>
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -82,7 +82,7 @@
           <text value="Target MetaModel"/>
         </properties>
       </component>
-      <component id="1c29b" class="javax.swing.JButton" default-binding="true">
+      <component id="1c29b" class="javax.swing.JButton" binding="Source2ModelATL">
         <constraints>
           <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -90,7 +90,7 @@
           <text value="Source2Model ATL"/>
         </properties>
       </component>
-      <component id="b27c" class="javax.swing.JButton" default-binding="true">
+      <component id="b27c" class="javax.swing.JButton" binding="Model2SourceATL">
         <constraints>
           <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -98,7 +98,7 @@
           <text value="Model2Source ATL"/>
         </properties>
       </component>
-      <component id="27a2a" class="javax.swing.JButton" default-binding="true">
+      <component id="27a2a" class="javax.swing.JButton" binding="RefactoringPatterns">
         <constraints>
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -106,7 +106,7 @@
           <text value="Patterns"/>
         </properties>
       </component>
-      <component id="abf5f" class="javax.swing.JButton" default-binding="true">
+      <component id="abf5f" class="javax.swing.JButton" binding="ModelInstance">
         <constraints>
           <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -114,7 +114,7 @@
           <text value="Model Instances"/>
         </properties>
       </component>
-      <component id="a93e4" class="javax.swing.JButton" default-binding="true">
+      <component id="a93e4" class="javax.swing.JButton" binding="RefactoringGoals">
         <constraints>
           <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
@@ -130,7 +130,7 @@
       </component>
       <component id="2e773" class="javax.swing.JTextPane" binding="textPane1" default-binding="true">
         <constraints>
-          <grid row="1" column="3" row-span="5" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="1" column="3" row-span="6" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>

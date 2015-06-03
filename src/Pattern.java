@@ -35,6 +35,32 @@ public class Pattern {
         Patterns.add(p);
     }
 
+
+    public String GenerateATLFinalCode(String metaModelPath, String metaModelName) {
+        String code = "";
+
+        if (helpers != null)
+            code = code + helpers + '\n';
+        if (lazyRules != null)
+            code = code + lazyRules + '\n';
+        if (rules != null)
+            code = code + rules + '\n';
+
+        for (String reqPatt : requiredPatterns) {
+            Pattern related = Pattern.searchInPatterns(reqPatt);
+            if (related != null)
+                code = related.GenerateATLFinalCode(metaModelPath, metaModelName) + '\n' + code;
+        }
+
+        String header = "-- @path " + metaModelName + "=" + metaModelPath + "\n" +
+                "-- @atlcompiler emftvm\n" +
+                "\n" +
+                "module " + metaModelName + "2" + metaModelName + ";\n" +
+                "create OUT : " + metaModelName + " refining IN : " + metaModelName + ";\n";
+
+        return header + code;
+    }
+
 }
 
 

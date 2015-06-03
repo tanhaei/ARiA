@@ -51,11 +51,15 @@ public class ATLLauncher {
     private String outputMetamodelNsURI;
 
     //Main transformation launch method
-    public void launch(String inMetamodelPath, String inModelPath, String outMetamodelPath,
-                       String outModelPath, String transformationDir, String transformationModule) {
+    public void launch(String IN_METAMODEL, String IN_METAMODEL_NAME, String inModelPath, String OUT_METAMODEL, String OUT_METAMODEL_NAME,
+                       String outModelPath, String transformrulepath, String TRANSFORMATION_MODULE) {
+
+        registerInputMetamodel(IN_METAMODEL);
+        registerOutputMetamodel(OUT_METAMODEL);
+
 
 		/* 
-		 * Creates the execution environment where the transformation is going to be executed,
+         * Creates the execution environment where the transformation is going to be executed,
 		 * you could use an execution pool if you want to run multiple transformations in parallel,
 		 * but for the purpose of the example let's keep it simple.
 		 */
@@ -63,7 +67,7 @@ public class ATLLauncher {
         ResourceSet rs = new ResourceSetImpl();
 
 		/*
-		 * Load meta-models in the resource set we just created, the idea here is to make the meta-models
+         * Load meta-models in the resource set we just created, the idea here is to make the meta-models
 		 * available in the context of the execution environment, the ResourceSet is later passed to the
 		 * ModuleResolver that is the actual class that will run the transformation.
 		 * Notice that we use the nsUris to locate the metamodels in the package registry, we initialize them 
@@ -74,7 +78,7 @@ public class ATLLauncher {
         env.registerMetaModel(IN_METAMODEL_NAME, inMetamodel);
 
         Metamodel outMetamodel = EmftvmFactory.eINSTANCE.createMetamodel();
-        outMetamodel.setResource(rs.getResource(URI.createURI(outputMetamodelNsURI), true));
+        outMetamodel.setResource(rs.getResource(URI.createURI(outputMetamodelNsURI, true), true));
         env.registerMetaModel(OUT_METAMODEL_NAME, outMetamodel);
 		
 		/*
@@ -87,11 +91,11 @@ public class ATLLauncher {
 
         // Load models
         Model inModel = EmftvmFactory.eINSTANCE.createModel();
-        inModel.setResource(rs.getResource(URI.createURI(inModelPath, true), true));
+        inModel.setResource(rs.getResource(URI.createFileURI(inModelPath), true));
         env.registerInputModel("IN", inModel);
 
         Model outModel = EmftvmFactory.eINSTANCE.createModel();
-        outModel.setResource(rs.createResource(URI.createURI(outModelPath)));
+        outModel.setResource(rs.createResource(URI.createFileURI(outModelPath)));
         env.registerOutputModel("OUT", outModel);
 		
 		/*
@@ -99,7 +103,7 @@ public class ATLLauncher {
 		 *  Point at the directory your transformations are stored, the ModuleResolver will 
 		 *  look for the .emftvm file corresponding to the module you want to load and run
 		 */
-        ModuleResolver mr = new DefaultModuleResolver(transformationDir, rs);
+        ModuleResolver mr = new DefaultModuleResolver(transformrulepath, rs);
         TimingData td = new TimingData();
         env.loadModule(mr, TRANSFORMATION_MODULE);
         td.finishLoading();
@@ -164,8 +168,7 @@ public class ATLLauncher {
     public static void main(String... args) {
 
         ATLLauncher l = new ATLLauncher();
-        l.registerInputMetamodel(IN_METAMODEL);
-        l.registerOutputMetamodel(OUT_METAMODEL);
-        l.launch(IN_METAMODEL, IN_MODEL, OUT_METAMODEL, OUT_MODEL, TRANSFORMATION_DIR, TRANSFORMATION_MODULE);
+
+      //  l.launch( IN_METAMODEL, IN_MODEL, OUT_METAMODEL, OUT_MODEL, TRANSFORMATION_DIR, TRANSFORMATION_MODULE);
     }
 }

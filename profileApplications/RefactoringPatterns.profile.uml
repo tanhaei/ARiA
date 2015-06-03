@@ -769,7 +769,7 @@
       <appliedProfile xmi:type="uml:Profile" href="../Refactoring%20Profile/refactoring.profile.uml#_wECpkPy5EeSnT_BGFxG0wA"/>
     </profileApplication>
   </uml:Profile>
-  <refactoring:ArchRefactoring xmi:id="_nlpZwAkWEeWB9Z6tUGE-AQ" base_Class="_93fLUPy5EeSnT_BGFxG0wA" name="HighCoupling" goals="_MYM2kAlOEeWB9Z6tUGE-AQ _cz-BQAlVEeWB9Z6tUGE-AQ" rule="temp" helpers="test">
+  <refactoring:ArchRefactoring xmi:id="_nlpZwAkWEeWB9Z6tUGE-AQ" base_Class="_93fLUPy5EeSnT_BGFxG0wA" name="HighCoupling" goals="_MYM2kAlOEeWB9Z6tUGE-AQ _cz-BQAlVEeWB9Z6tUGE-AQ" rule="rule HighCouplingBadSmell{&#xA;  from&#x9;&#xA;    c1 : ACMEPROFILE!Component,&#xA;    c2 : ACMEPROFILE!Component,&#xA;    con : ACMEPROFILE!Connector,&#xA;    attachment : ACMEPROFILE!Attachment(&#xA;      attachment.AllInstances ->select(a | &#xA;      c1.AllInstances ->select(cc1 |&#xA;      con.AllInstances ->select(co |&#xA;      a.con = co.name and a.comp = cc1.name))) &#xA;      ->select(f |&#xA;      attachment.AllInstances ->select(a | &#xA;      c2.AllInstances ->select(cc2 |&#xA;      con.AllInstances ->select(co |&#xA;      f.con = co.name and a.comp = cc2.name))))&#xA;    )&#xA;  to&#xA;    if(attachment.Count > 2*Threshold) then (thisModule.getC1Name &lt;- c1.name, thisModule.getC2Name &lt;- c2.name)&#xA;  do&#xA;    {&#xA;     thisModule.MergeComponent();&#xA;    }" helpers="helper def : Threshold : Integer = 5;">
     <requiredPatterns>test
 temp</requiredPatterns>
     <requiredPatterns>temp</requiredPatterns>

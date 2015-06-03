@@ -38,9 +38,6 @@ public class DecisionSupport {
         for (Pattern p : Pattern.Patterns) {
             p.rank = CalculateW(p);
         }
-        Pattern p = new Pattern("test");
-        p.rank = 20;
-        Pattern.addToPatterns(p);
 
         Collections.sort(Pattern.Patterns, new CustomComparator());
 
