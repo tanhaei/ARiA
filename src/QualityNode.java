@@ -48,4 +48,6 @@ public class QualityNode {
     public static void addToQualityNodes(QualityNode g) {
         QualityNodes.add(g);
     }
+
+
 }

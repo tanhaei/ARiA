@@ -61,6 +61,11 @@ public class dialogue {
         frame.setVisible(true);
 
         RefactoringProfileLoader r = new RefactoringProfileLoader("./profileApplications/RefactoringGoals.profile.uml", "./profileApplications/RefactoringPatterns.profile.uml");
+
+        QualityAttribute.calculateOveralQFactor();
+
+        DecisionSupport.CalculateW(Pattern.searchInPatterns("HighCoupling"));
+
         //r.loadProfile();
     }
 }

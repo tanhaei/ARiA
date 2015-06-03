@@ -18,7 +18,7 @@ public class RefactoringGoal {
     }
 
 
-    private static List<RefactoringGoal> RefactoringGoals = new ArrayList<RefactoringGoal>();
+    public static List<RefactoringGoal> RefactoringGoals = new ArrayList<RefactoringGoal>();
 
     public static RefactoringGoal searchById(String id) {
         if (RefactoringGoals == null) return null;
@@ -35,4 +35,7 @@ public class RefactoringGoal {
     public static void addToRefactoringGoals(RefactoringGoal rg) {
         RefactoringGoals.add(rg);
     }
+
+
+
 }

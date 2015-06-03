@@ -35,4 +35,6 @@ public class Goal {
     public static void addToGoals(Goal g) {
         Goals.add(g);
     }
+
+
 }

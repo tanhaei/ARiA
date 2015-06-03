@@ -68,8 +68,11 @@ public class RefactoringProfileLoader {
         EList<EObject> elements = modelResource.getContents();
 
 
+
         for (EObject e : elements) {
             String ClassName = e.eClass().getName();
+
+
 
             // QualityNode
             if (ClassName.equals("QualityNode")) {
@@ -110,6 +113,7 @@ public class RefactoringProfileLoader {
                             QualityAttribute qa = QualityAttribute.searchById(subqualitySTR);
                             if (qa == null) {
                                 qa = new QualityAttribute(subqualitySTR);
+                                qa.parent = "root";
                                 QualityAttribute.addToQualityAttribute(qa);
                             }
                             newrefgoal.qualities.add(qa.ID);
@@ -127,6 +131,7 @@ public class RefactoringProfileLoader {
                 QualityAttribute newq = QualityAttribute.searchById(id);
                 if (newq == null) {
                     newq = new QualityAttribute(id);
+                    newq.parent = "root";
                 }
 
                 for (FeatureMap.Entry e2 : ((org.eclipse.emf.ecore.xml.type.impl.AnyTypeImpl) e).getAnyAttribute()) {
@@ -151,6 +156,8 @@ public class RefactoringProfileLoader {
                     }
 
                 }
+                if (QualityAttribute.searchById(newq.ID) == null)
+                    QualityAttribute.addToQualityAttribute(newq);
             }
 
 

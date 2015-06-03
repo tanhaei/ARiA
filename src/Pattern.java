@@ -19,7 +19,7 @@ public class Pattern {
     }
 
 
-    public static List<Pattern> Patterns = new ArrayList<Pattern>();
+    private static List<Pattern> Patterns = new ArrayList<Pattern>();
 
     public static Pattern searchInPatterns(String name) {
         if (Patterns == null) return null;

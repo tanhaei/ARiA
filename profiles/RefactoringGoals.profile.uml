@@ -290,9 +290,10 @@
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FTLJoAnHEeWB9Z6tUGE-AQ" source="http://www.eclipse.org/uml2/2.0.0/UML" references="_DitRkAnHEeWB9Z6tUGE-AQ"/>
     </profileApplication>
   </uml:Profile>
-  <profile:QualityAttribute xmi:id="_GgobQAnHEeWB9Z6tUGE-AQ" base_Class="_qtpucAnEEeWB9Z6tUGE-AQ" node="_JOxcgAnHEeWB9Z6tUGE-AQ" importanceFactor="4"/>
+  <profile:QualityAttribute xmi:id="_GgobQAnHEeWB9Z6tUGE-AQ" base_Class="_qtpucAnEEeWB9Z6tUGE-AQ" node="_Ghf98AnHEeWB9Z6tUGE-AQ" importanceFactor="4"/>
   <profile:QualityNode xmi:id="_Ghf98AnHEeWB9Z6tUGE-AQ" base_Class="_qtpucAnEEeWB9Z6tUGE-AQ" name="Testability"/>
   <profile:RefactoringGoal xmi:id="_GiHpAAnHEeWB9Z6tUGE-AQ" base_Class="_qtpucAnEEeWB9Z6tUGE-AQ" qualities="_H-T6MAnHEeWB9Z6tUGE-AQ _GgobQAnHEeWB9Z6tUGE-AQ"/>
-  <profile:QualityAttribute xmi:id="_H-T6MAnHEeWB9Z6tUGE-AQ" base_Class="_mGR6sAnEEeWB9Z6tUGE-AQ" node="_JOxcgAnHEeWB9Z6tUGE-AQ" importanceFactor="9"/>
+  <profile:QualityAttribute xmi:id="_H-T6MAnHEeWB9Z6tUGE-AQ" base_Class="_mGR6sAnEEeWB9Z6tUGE-AQ" node="_JOxcgAnHEeWB9Z6tUGE-AQ" importanceFactor="6"/>
   <profile:QualityNode xmi:id="_JOxcgAnHEeWB9Z6tUGE-AQ" base_Class="_YFcdMAnEEeWB9Z6tUGE-AQ" name="Maintainability"/>
 </xmi:XMI>
+
