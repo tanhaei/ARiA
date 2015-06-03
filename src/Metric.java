@@ -1,7 +1,5 @@
-import com.sun.javafx.font.FontStrike;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,9 +21,7 @@ public class Metric {
 
     public static Metric searchById(String id) {
         if (Metrics == null) return null;
-        Iterator<Metric> it = Metrics.iterator();
-        while (it.hasNext()) {
-            Metric metric = it.next();
+        for (Metric metric : Metrics) {
             if (metric.ID.equals(id)) {
                 return metric;
             }

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -21,9 +20,8 @@ public class QualityAttribute {
 
     public static QualityAttribute searchById(String id) {
         if (QualityAttributes == null) return null;
-        Iterator<QualityAttribute> it = QualityAttributes.iterator();
-        while (it.hasNext()) {
-            QualityAttribute quality = it.next();
+
+        for (QualityAttribute quality : QualityAttributes) {
             if (quality.ID.equals(id)) {
                 return quality;
             }
@@ -34,9 +32,7 @@ public class QualityAttribute {
     public static QualityAttribute searchByNode(String nodeid) {
         if (QualityAttributes == null) return null;
         QualityNode node = QualityNode.searchById(nodeid);
-        Iterator<QualityAttribute> it = QualityAttributes.iterator();
-        while (it.hasNext()) {
-            QualityAttribute quality = it.next();
+        for (QualityAttribute quality : QualityAttributes) {
             if (quality.node.equals(node.ID) || quality.node.equals(node.ID2)) {
                 return quality;
             }
@@ -51,16 +47,13 @@ public class QualityAttribute {
     public static void calculateOveralQFactor() {
         if (QualityAttributes == null) return;
 
-        Iterator<QualityAttribute> it = QualityAttributes.iterator();
-
-        while (it.hasNext()) {
-            QualityAttribute node = it.next();
-            QualityAttribute.OverQFactor(node.ID);
+        for (QualityAttribute node : QualityAttributes) {
+            QualityAttribute.OveralQFactor(node.ID);
         }
         return;
     }
 
-    public static double OverQFactor(String qualityid) {
+    public static double OveralQFactor(String qualityid) {
         double factor = 0;
         QualityAttribute QQ = QualityAttribute.searchById(qualityid);
 
@@ -79,7 +72,7 @@ public class QualityAttribute {
                     child_factor = child_factor + QualityAttribute.searchById(sibiling).importance;
                 }
                 double relative_importance = QQ.importance / child_factor;
-                factor = relative_importance * OverQFactor(QQ.parent);
+                factor = relative_importance * OveralQFactor(QQ.parent);
 
                 QQ.overalQFactor = factor;
             } else {

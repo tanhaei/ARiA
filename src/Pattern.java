@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -11,6 +10,7 @@ public class Pattern {
     public String rules;
     public String lazyRules;
     public String helpers;
+    public double rank;
     public List<String> goals = new ArrayList<String>();
     public List<String> requiredPatterns = new ArrayList<String>();
 
@@ -19,13 +19,11 @@ public class Pattern {
     }
 
 
-    private static List<Pattern> Patterns = new ArrayList<Pattern>();
+    public static List<Pattern> Patterns = new ArrayList<Pattern>();
 
     public static Pattern searchInPatterns(String name) {
         if (Patterns == null) return null;
-        Iterator<Pattern> it = Patterns.iterator();
-        while (it.hasNext()) {
-            Pattern patt = it.next();
+        for (Pattern patt : Patterns) {
             if (patt.name.equals(name)) {
                 return patt;
             }

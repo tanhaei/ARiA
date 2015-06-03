@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,13 +21,12 @@ public class Goal {
 
     public static Goal searchById(String id) {
         if (Goals == null) return null;
-        Iterator<Goal> it = Goals.iterator();
-        while (it.hasNext()) {
-            Goal goal = it.next();
+        for (Goal goal : Goals) {
             if (goal.ID.equals(id)) {
                 return goal;
             }
         }
+
         return null;
     }
 

@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,9 +22,7 @@ public class QualityNode {
 
     public static QualityNode searchById(String id) {
         if (QualityNodes == null) return null;
-        Iterator<QualityNode> it = QualityNodes.iterator();
-        while (it.hasNext()) {
-            QualityNode node = it.next();
+        for (QualityNode node : QualityNodes) {
             if (node.ID.equals(id) || node.ID2.equals(id)) {
                 return node;
             }
@@ -35,9 +32,7 @@ public class QualityNode {
 
     public static QualityNode searchByName(String name) {
         if (QualityNodes == null) return null;
-        Iterator<QualityNode> it = QualityNodes.iterator();
-        while (it.hasNext()) {
-            QualityNode node = it.next();
+        for (QualityNode node : QualityNodes) {
             if (node.name.equals(name)) {
                 return node;
             }

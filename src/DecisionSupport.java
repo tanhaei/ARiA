@@ -13,7 +13,7 @@ public class DecisionSupport {
             metricSum = metricSum + (m.targetValue - m.sourceValue);
         }
         metricSum = metricSum / goal.metrics.size();
-        subW = metricSum * QualityAttribute.OverQFactor(QualityAttribute.searchByNode(goal.node).ID);
+        subW = metricSum * QualityAttribute.OveralQFactor(QualityAttribute.searchByNode(goal.node).ID);
 
         for (String subgoal : goal.subGoals) {
             subW = subW + CalculateSubW(Goal.searchById(subgoal));
@@ -29,5 +29,13 @@ public class DecisionSupport {
             W = W + CalculateSubW(Goal.searchById(goal));
         }
         return W;
+    }
+
+    public static void PatternRanking()
+    {
+        for(Pattern p : Pattern.Patterns)
+        {
+            p.rank = CalculateW(p);
+        }
     }
 }
