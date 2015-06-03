@@ -1,0 +1,94 @@
+-- @path ACME=/metamodels/ACME.ecore
+-- @path ACMEProfile=/metamodels/ACMEProfile.ecore
+-- @atlcompiler emftvm
+
+module ACMEProfile2ACME;
+create OUT : ACME from IN : ACMEProfile;
+
+rule Element2EelementProfile{
+  from	m : ACME!Element
+  to 	a : ACMEPROFILE!Element (
+    name <- m.name
+    property <- prop
+    representations <- reps 
+    ),
+    prop : distinct ACMEPROFILE!Property 
+    foreach(p in m.property)(
+      name <- p.name,
+      val <- p.val
+     ),
+    reps : distinct ACMEPROFILE!representations
+    foreach(p in m.representation)(
+      name <- p.name,
+      val <- p.val
+    )	 
+}
+rule ACMEFile2ACMEFilePROFILE {
+  from	m : ACME!ACMEFile
+  to	a : ACMEPROFILE!ACMEFile (entries <- entry),
+    entry : distinct ACMEPROFILE!ACMEEntry 
+    foreach(e in m.entries)(
+     -- nothings)
+}
+rule PORT2PORT extends Element2EelementProfile{
+  from	m : ACME!Port
+  to 	a : ACMEPROFILE!Port (
+    --nothing! inheritance @do@ the job!)
+}
+rule Type2Type extends Element2EelementProfile{
+  from	m : ACME!Type
+  to 	a : ACMEPROFILE!Type ()
+}
+rule ROLE2ROLE extends Element2EelementProfile{
+  from	m : ACME!Role
+  to 	a : ACMEPROFILE!Role ()
+}
+rule COM2COM extends Element2EelementProfile{
+  from	m : ACME!Component
+  to 	a : ACMEPROFILE!Component (
+    ports <- thisModule.resolveTemp(ACMEPROFILE!Port.allInstances() -> select(p | p.name in m.ports->collect(name))))
+}
+rule Conn2Conn extends Element2EelementProfile{
+  from	m : ACME!Connector
+  to 	a : ACMEPROFILE!Connector (
+    roles <- thisModule.resolveTemp(ACMEPROFILE!Role.allInstances() -> select(r | r.name in m.roles->collect(name))),
+    system <- thisModule.resolveTemp(ACMEPROFILE!System.allInstances() -> select(r | r.name = m.system)))
+}
+rule CT2PCT extends COM2COM, ACMEEntry{
+  from	m : ACME!ComponentType
+  to 	a : ACMEPROFILE!ComponentType (extend <- m.extend)
+}
+rule CI2PCI extends COM2COM{
+  from	m : ACME!ComponentInstance
+  to 	a : ACMEPROFILE!ComponentInstance (instanceOf <- m.instanceOf)
+}
+rule REPS2REPS extends Element2EelementProfile{
+  from	m : ACME!Representation
+  to 	a : ACMEPROFILE!Representations (
+    systems <- thisModule.resolveTemp(ACMEPROFILE!System.allInstances() -> select(s | s.name in m.system->collect(name))))
+}
+rule SYS2SYS extends Element2EelementProfile{
+  from	m : ACME!System
+  to 	a : ACMEPROFILE!System (
+    componentDeclaration <- thisModule.resolveTemp(ACMEPROFILE!Component.allInstances() -> select(r | r.name in m.componentDeclaration->collect(name)))
+    connectorDeclaration <- thisModule.resolveTemp(ACMEPROFILE!Connector.allInstances() -> select(r | r.name in m.connectorDeclaration->collect(name)))
+		bindings <- bind
+		bindings <- attach
+		),
+		bind : distinct ACMEPROFILE!Binding 
+		foreach(b in m.bindings)(
+ 			compSrc <- b.compSrc,
+ 			portSrc <- b.portSrc,
+			compDest <- b.compDest,
+			portDest <- b.portDest,
+			systemBinding <- self
+		),
+		attach : distinct ACMEPROFILE!Attachment 
+		foreach(b in m.attachments)(
+ 			comp <- b.comp,
+ 			port <- b.port,
+			con <- b.con,
+			role <- b.role,
+			systemAttachment <- self
+		)
+}
