@@ -1,3 +1,7 @@
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+
 /**
  * Created by tanhaei on 15/6/3 AD.
  */
@@ -24,18 +28,23 @@ public class DecisionSupport {
 
     public static double CalculateW(Pattern p) {
         double W = 0;
-        for(String goal : p.goals)
-        {
+        for (String goal : p.goals) {
             W = W + CalculateSubW(Goal.searchById(goal));
         }
         return W;
     }
 
-    public static void PatternRanking()
-    {
-        for(Pattern p : Pattern.Patterns)
-        {
+    public static void PatternRanking() {
+        for (Pattern p : Pattern.Patterns) {
             p.rank = CalculateW(p);
         }
+        Pattern p = new Pattern("test");
+        p.rank = 20;
+        Pattern.addToPatterns(p);
+
+        Collections.sort(Pattern.Patterns, new CustomComparator());
+
     }
 }
+
+

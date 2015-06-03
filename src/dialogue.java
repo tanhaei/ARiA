@@ -64,7 +64,9 @@ public class dialogue {
 
         QualityAttribute.calculateOveralQFactor();
 
-        DecisionSupport.CalculateW(Pattern.searchInPatterns("HighCoupling"));
+        //DecisionSupport.CalculateW(Pattern.searchInPatterns("HighCoupling"));
+
+        DecisionSupport.PatternRanking();
 
         //r.loadProfile();
     }

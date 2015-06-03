@@ -34,6 +34,7 @@ public class Pattern {
     public static void addToPatterns(Pattern p) {
         Patterns.add(p);
     }
+
 }
 
 
