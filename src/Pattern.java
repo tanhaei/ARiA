@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -15,6 +16,25 @@ public class Pattern {
 
     public Pattern(String id) {
         ID = id;
+    }
+
+
+    public static List<Pattern> Patterns = new ArrayList<Pattern>();
+
+    public static Pattern searchInPatterns(String name) {
+        if (Patterns == null) return null;
+        Iterator<Pattern> it = Patterns.iterator();
+        while (it.hasNext()) {
+            Pattern patt = it.next();
+            if (patt.name.equals(name)) {
+                return patt;
+            }
+        }
+        return null;
+    }
+
+    public static void addToPatterns(Pattern p) {
+        Patterns.add(p);
     }
 }
 

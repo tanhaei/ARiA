@@ -777,5 +777,5 @@ temp</requiredPatterns>
   <refactoring:Goal xmi:id="_MYM2kAlOEeWB9Z6tUGE-AQ" base_Class="_F1XA0Py6EeSnT_BGFxG0wA" node="_O1y6YAlOEeWB9Z6tUGE-AQ" metrics="_dNsNAAlOEeWB9Z6tUGE-AQ"/>
   <refactoring:QualityNode xmi:id="_O1y6YAlOEeWB9Z6tUGE-AQ" name="Maintainability" base_Class="_2PdioPy8EeSnT_BGFxG0wA"/>
   <refactoring:QualityMetric xmi:id="_dNsNAAlOEeWB9Z6tUGE-AQ" base_Class="_CVlHQPy6EeSnT_BGFxG0wA" name="Coupling" type="_-MqfMPy7EeSnT_BGFxG0wA" sourceValue="2.0"/>
-  <refactoring:Goal xmi:id="_cz-BQAlVEeWB9Z6tUGE-AQ" base_Class="_93fLUPy5EeSnT_BGFxG0wA" subGoals="_MYM2kAlOEeWB9Z6tUGE-AQ" metrics="_dNsNAAlOEeWB9Z6tUGE-AQ"/>
+  <refactoring:Goal xmi:id="_cz-BQAlVEeWB9Z6tUGE-AQ" base_Class="_93fLUPy5EeSnT_BGFxG0wA" subGoals="_cz-BQAlVEeWB9Z6tUGE-AQ" metrics="_dNsNAAlOEeWB9Z6tUGE-AQ"/>
 </xmi:XMI>
