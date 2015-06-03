@@ -60,7 +60,7 @@ public class dialogue {
         frame.pack();
         frame.setVisible(true);
 
-        RefactoringPatterns r = new RefactoringPatterns("temp");
+        RefactoringProfileLoader r = new RefactoringProfileLoader("./profileApplications/RefactoringGoals.profile.uml", "./profileApplications/RefactoringPatterns.profile.uml");
         //r.loadProfile();
     }
 }

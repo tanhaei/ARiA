@@ -24,51 +24,21 @@ import org.eclipse.uml2.uml.*;
 import org.eclipse.uml2.uml.Class;
 import org.eclipse.uml2.uml.resource.UMLResource;
 
-import javax.management.Attribute;
 
+public class RefactoringProfileLoader {
 
-public class RefactoringPatterns {
-    public String name;
-
-
-    private Model model;
     private Profile profile;
-    private String ModelURL;
 
     private Stereotype ArchRefactoring;
 
     private static final ResourceSetImpl RESOURCE_SET = new ResourceSetImpl();
 
 
-    public RefactoringPatterns(String url) {
-        ModelURL = url;
-
-        loadRefactorngGoalsProfileApplication("./profiles/RefactoringGoals.profile.uml");
-        loadRefactorngPatternsProfileApplication("./profiles/RefactoringPatterns.profile.uml");
-
-
+    public RefactoringProfileLoader(String RefactoringGoalsPath, String RefactoringPatternsPath) {
+        loadRefactorngGoalsProfileApplication(RefactoringGoalsPath);
+        loadRefactorngPatternsProfileApplication(RefactoringPatternsPath);
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    protected org.eclipse.uml2.uml.Profile load(URI uri) {
-        System.out.println("uri = " + uri);
-        org.eclipse.uml2.uml.Profile profile_ = null;
-
-        try {
-            Resource resource = RESOURCE_SET.getResource(uri, true);
-
-            profile_ = (org.eclipse.uml2.uml.Profile) EcoreUtil.getObjectByType(resource.getContents(), UMLPackage.Literals.PROFILE_APPLICATION);
-        } catch (WrappedException we) {
-            we.printStackTrace();
-            System.exit(1);
-        }
-
-        return profile_;
-    }
 
     protected void loadRefactorngPatternsProfile(String ProfileAddress) {
         URI profileUri = URI.createFileURI(ProfileAddress);
