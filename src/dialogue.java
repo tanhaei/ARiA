@@ -58,7 +58,7 @@ public class dialogue {
                     if (PerformRefactoring.refversion == 0) {
                         PerformRefactoring.model2TargetTransformation(textField1.getText(), textField2.getText(), textField6.getText(), textField3.getText());
                     }
-                    PerformRefactoring.listRefactorings(textField2.getText(), textField5.getText(), textField7.getText(), list1);
+                    PerformRefactoring.listRefactorings(textField2.getText(), textField5.getText(), textField7.getText(), list1, progressBar1);
                 } catch (Exception excp) {
 
                 }

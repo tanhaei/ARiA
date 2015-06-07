@@ -93,9 +93,10 @@ public class PerformRefactoring {
         l.launch(IN_METAMODEL, IN_METAMODEL_NAME, IN_MODEL, OUT_METAMODEL, OUT_METAMODEL_NAME, OUT_MODEL, TRANSFORMATION_DIR, TRANSFORMATION_MODULE);
     }
 
-    public static void listRefactorings(String targetMetaModel, String patternsPath, String goalsPath, JList list) {
+    public static void listRefactorings(String targetMetaModel, String patternsPath, String goalsPath, JList list, JProgressBar progg) {
 
         ATLLauncher l = new ATLLauncher();
+        progg.setValue(0);
 
         OUT_METAMODEL = targetMetaModel;
         Path p2 = Paths.get(OUT_METAMODEL);
@@ -122,7 +123,9 @@ public class PerformRefactoring {
 
         DefaultListModel listModel = new DefaultListModel();
 
+
         for (Pattern patt : Pattern.Patterns) {
+
             String mmatl = PerformRefactoring.createATLRuleFile(patt, IN_METAMODEL, IN_METAMODEL_NAME);
             Path p4 = Paths.get(mmatl);
             String Pattern_TRANSFORMATION = p4.getFileName().toString();
@@ -133,6 +136,7 @@ public class PerformRefactoring {
                 listModel.addElement(patt.name + " Pattern is matched!");
                 list.setListData(listModel.toArray());
             }
+            progg.setValue(progg.getValue() + (int) 100 / (Pattern.Patterns.size()));
         }
     }
 
