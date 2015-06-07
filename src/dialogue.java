@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Created by tanhaei on 15/6/1 AD.
@@ -30,6 +33,7 @@ public class dialogue {
     private JButton RefactoringPatterns;
     private JButton ModelInstance;
     private JButton RefactoringGoals;
+    private JList list1;
     private JButton button8;
     private JButton button9;
 
@@ -42,21 +46,41 @@ public class dialogue {
     public static String OUT_MODEL = "./models/simple.xmi";
 
     public static String TRANSFORMATION_DIR = "./transformations/";
-    public static String TRANSFORMATION_MODULE = "Composed2Simple";
+    public static String TRANSFORMATION_MODULE = "ACME2ACMEProfile";
 
     public dialogue() {
 
         listRefactoringButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                IN_METAMODEL = textField1.getText();
-                OUT_METAMODEL = textField2.getText();
 
-                ATLLauncher l = new ATLLauncher();
-                l.launch(IN_METAMODEL, IN_METAMODEL_NAME, IN_MODEL, OUT_METAMODEL, OUT_METAMODEL_NAME, OUT_MODEL, TRANSFORMATION_DIR, TRANSFORMATION_MODULE);
+                try {
+                    if (PerformRefactoring.refversion == 0) {
+                        PerformRefactoring.model2TargetTransformation(textField1.getText(), textField2.getText(), textField6.getText(), textField3.getText());
+                    }
+                    PerformRefactoring.listRefactorings(textField2.getText(), textField5.getText(), textField7.getText(), list1);
+                } catch (Exception excp) {
+
+                }
+                doRefactoringButton.setEnabled(true);
+
             }
         });
 
+        doRefactoringButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selected = (String) list1.getSelectedValue();
+                selected = selected.replace(" Pattern is matched!", "");
+                if (selected != null)
+                    PerformRefactoring.doRefactoring(textField2.getText(), selected);
+
+                if (PerformRefactoring.refversion != 0) {
+
+                }
+
+            }
+        });
 
         sourceMetaModelButton.addActionListener(new ActionListener() {
             @Override
@@ -136,6 +160,7 @@ public class dialogue {
                 }
             }
         });
+
     }
 
 
@@ -154,6 +179,7 @@ public class dialogue {
 
         DecisionSupport.PatternRanking();
         PerformRefactoring.createATLRuleFile(Pattern.searchInPatterns("HighCoupling"), "./metamodel/ACMEProfile.ATL", "ACMEprofile");
+
         //r.loadProfile();
     }
 

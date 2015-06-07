@@ -1,0 +1,28 @@
+-- @path ACMEprofile=./metamodel/ACMEProfile.ATL
+-- @atlcompiler emftvm
+
+module ACMEprofile2ACMEprofile;
+create OUT : ACMEprofile refining IN : ACMEprofile;
+helper def : Threshold : Integer = 5;
+rule HighCouplingBadSmell{
+  from	
+    c1 : ACMEPROFILE!Component,
+    c2 : ACMEPROFILE!Component,
+    con : ACMEPROFILE!Connector,
+    attachment : ACMEPROFILE!Attachment(
+      attachment.AllInstances ->select(a | 
+      c1.AllInstances ->select(cc1 |
+      con.AllInstances ->select(co |
+      a.con = co.name and a.comp = cc1.name))) 
+      ->select(f |
+      attachment.AllInstances ->select(a | 
+      c2.AllInstances ->select(cc2 |
+      con.AllInstances ->select(co |
+      f.con = co.name and a.comp = cc2.name))))
+    )
+  to
+    if(attachment.Count > 2*Threshold) then (thisModule.getC1Name <- c1.name, thisModule.getC2Name <- c2.name)
+  do
+    {
+     thisModule.MergeComponent();
+    }

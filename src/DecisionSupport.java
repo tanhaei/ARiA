@@ -1,3 +1,6 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,6 +44,44 @@ public class DecisionSupport {
 
         Collections.sort(Pattern.Patterns, new CustomComparator());
 
+    }
+
+    public static int CompareTwoFile(String fILE_ONE2, String fILE_TWO2) {
+        File f1 = new File(fILE_ONE2); //OUTFILE
+        File f2 = new File(fILE_TWO2); //INPUT
+
+        try {
+            FileReader fR1 = new FileReader(f1);
+            FileReader fR2 = new FileReader(f2);
+
+            BufferedReader reader1 = new BufferedReader(fR1);
+            BufferedReader reader2 = new BufferedReader(fR2);
+
+            String line1 = null;
+            String line2 = null;
+
+            while (true) // Continue while there are equal lines
+            {
+                line1 = reader1.readLine();
+                line2 = reader2.readLine();
+
+                if (line1 == null) // End of file 1
+                {
+                    return (line2 == null ? 1 : 0); // Equal only if file 2 also ended
+                } else if (line2 == null) {
+                    return 0; // File 2 ended before file 1, so not equal
+                } else if (!line1.equalsIgnoreCase(line2)) // Non-null and different lines
+                {
+                    return 0;
+                }
+
+                // Non-null and equal lines, continue until the input is exhausted
+            }
+        }
+        catch (Exception e)
+        {
+            return 0;
+        }
     }
 }
 
